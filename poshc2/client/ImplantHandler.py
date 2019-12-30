@@ -612,11 +612,11 @@ def do_createnewpayload(user, command, creds=None):
     params = params.sub("", command)
     creds = None
     if "-credid" in params:
-        creds, params = get_creds_from_params(params, startup, user)
+        creds, params = get_creds_from_params(params, user)
         if creds is None:
-            startup(user, "CredID not found")
+            return
         if not creds['Password']:
-            startup(user, "This command does not support credentials with hashes")
+            print(Colours.RED, "This command does not support credentials with hashes" ,Colours.GREEN)
     domain = input("Domain or URL: https://www.example.com ")
     domainbase = (domain.lower()).replace('https://', '')
     domainbase = domainbase.replace('http://', '')
@@ -659,11 +659,11 @@ def do_createproxypayload(user, command, creds=None):
     params = params.sub("", command)
     creds = None
     if "-credid" in params:
-        creds, params = get_creds_from_params(params, startup, user)
+        creds, params = get_creds_from_params(params, user)
         if creds is None:
-            startup(user, "CredID not found")
+            return
         if not creds['Password']:
-            startup(user, "This command does not support credentials with hashes")
+            print(Colours.RED, "This command does not support credentials with hashes" ,Colours.GREEN)
     if creds is not None:
         proxyuser = "%s\\%s" % (creds['Domain'], creds['Username'])
         proxypass = creds['Password']
