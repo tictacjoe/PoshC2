@@ -248,19 +248,19 @@ def commandloop(implant_id, user):
                 allcommands = command
                 if "\n" in command:
                     ri = input("Do you want to run commands seperately? (Y/n) ")                    
-                implant_split = get_implants()
-                if implant_split:
-                    for implant_id in implant_split:
+                implants_split = get_implants()
+                if implants_split:
+                    for implant_details in implants_split:
                         # if "\n" in command run each command individually or ask the question if thats what they want to do
                         if "\n" in allcommands:
                             if ri.lower() == "y" or ri == "":
                                 commands = allcommands.split('\n')
                                 for command in commands:
-                                    runcommand(command, implant_id[1], implant_id_orig, user)                      
+                                    runcommand(command, implant_details[1], implant_id_orig, user)                      
                             else:
-                                runcommand(command, implant_id[1], implant_id_orig, user)
+                                runcommand(command, implant_details[1], implant_id_orig, user)
                         else: 
-                            runcommand(command, implant_id[1], implant_id_orig, user)
+                            runcommand(command, implant_details[1], implant_id_orig, user)
 
             # if "seperated list" against single uri
             elif "," in implant_id:
@@ -268,18 +268,18 @@ def commandloop(implant_id, user):
                 if "\n" in command:
                     ri = input("Do you want to run commands seperately? (Y/n) ")                    
                 implant_split = implant_id.split(",")
-                for implant_id in implant_split:
-                    implant_id = get_randomuri(implant_id)
+                for split_implant_id in implant_split:
+                    implant_randomuri = get_randomuri(split_implant_id)
                     # if "\n" in command run each command individually or ask the question if thats what they want to do
                     if "\n" in allcommands:
                         if ri.lower() == "y" or ri == "":
                             commands = allcommands.split('\n')
                             for command in commands:
-                                runcommand(command, implant_id, implant_id_orig, user)                        
+                                runcommand(command, implant_randomuri, implant_id_orig, user)                        
                         else:
-                            runcommand(command, implant_id, implant_id_orig, user)
+                            runcommand(command, implant_randomuri, implant_id_orig, user)
                     else: 
-                        runcommand(command, implant_id, implant_id_orig, user)
+                        runcommand(command, implant_randomuri, implant_id_orig, user)
 
             # if "range" against single uri
             elif "-" in implant_id:
@@ -287,19 +287,19 @@ def commandloop(implant_id, user):
                 if "\n" in command:
                     ri = input("Do you want to run commands seperately? (Y/n) ")
                 implant_split = implant_id.split("-")
-                for implant_id in range(int(implant_split[0]), int(implant_split[1]) + 1):
+                for range_implant_id in range(int(implant_split[0]), int(implant_split[1]) + 1):
                     try:
-                        implant_id = get_randomuri(implant_id)
+                        implant_randomuri = get_randomuri(range_implant_id)
                         # if "\n" in command run each command individually or ask the question if thats what they want to do
                         if "\n" in allcommands:
                             if ri.lower() == "y" or ri == "":
                                 commands = allcommands.split('\n')
                                 for command in commands:
-                                    runcommand(command, implant_id, implant_id_orig, user)                        
+                                    runcommand(command, implant_randomuri, implant_id_orig, user)                        
                             else:
-                                runcommand(command, implant_id, implant_id_orig, user)
+                                runcommand(command, implant_randomuri, implant_id_orig, user)
                         else: 
-                            runcommand(command, implant_id, implant_id_orig, user)
+                            runcommand(command, implant_randomuri, implant_id_orig, user)
                     except Exception:
                         print("Unknown ImplantID")
 
@@ -308,17 +308,17 @@ def commandloop(implant_id, user):
                 allcommands = command
                 if "\n" in command:
                     ri = input("Do you want to run commands seperately? (Y/n) ")
-                implant_id = get_randomuri(implant_id)
+                implant_randomuri = get_randomuri(implant_id)
                 # if "\n" in command run each command individually or ask the question if thats what they want to do
                 if "\n" in allcommands:
                     if ri.lower() == "y" or ri == "":
                         commands = allcommands.split('\n')
                         for command in commands:
-                            runcommand(command, implant_id, implant_id_orig, user)                        
+                            runcommand(command, implant_randomuri, implant_id_orig, user)                        
                     else:
-                        runcommand(command, implant_id, implant_id_orig, user)
+                        runcommand(command, implant_randomuri, implant_id_orig, user)
                 else: 
-                    runcommand(command, implant_id, implant_id_orig, user)
+                    runcommand(command, implant_randomuri, implant_id_orig, user)
 
         except KeyboardInterrupt:
             commandloop(implant_id_orig, user)
@@ -332,7 +332,9 @@ def commandloop(implant_id, user):
             traceback.print_exc()
             print("Error: %s" % e)
             time.sleep(1)
-            startup(user, user)
+            startup(user, user) # TODO
+        finally:
+            implant_id = implant_id_orig # TODO hacky
 
 
 def do_back(user, command):
