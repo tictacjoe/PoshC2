@@ -228,6 +228,8 @@ def commandloop(implant_id, user):
                 print(Colours.GREEN)                
                 prompt_commands = COMMANDS
                 command = session.prompt("%s> " % implant_id, completer=FirstWordFuzzyWordCompleter(prompt_commands, WORD=True))
+                if command == "back":
+                    return
             else:
                 hostname = get_hostdetails(implant_id)
                 if not hostname:
@@ -240,6 +242,8 @@ def commandloop(implant_id, user):
                 print(Colours.GREEN)
                 print("%s\\%s @ %s (PID:%s)" % (hostname[11], hostname[2], hostname[3], hostname[8]))
                 command = session.prompt("%s %s> " % (get_implant_type_prompt_prefix(implant_id), implant_id), completer=FirstWordFuzzyWordCompleter(prompt_commands, WORD=True))
+                if command == "back":
+                    return
 
             # if "all" run through all implants get_implants()
             if implant_id == "all":
