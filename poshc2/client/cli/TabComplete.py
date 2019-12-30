@@ -1,9 +1,5 @@
 import os, readline, glob
 
-if os.name == 'nt':
-    import pyreadline.rlmain
-
-
 class tabCompleter(object):
     """
     A tab completer that can either complete from

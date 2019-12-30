@@ -110,7 +110,7 @@ def do_searchhelp(user, command, randomuri):
 
 
 def do_listmodules(user, command, randomuri):
-    modules = os.listdir("%s/Modules/" % PoshInstallDirectory)
+    modules = os.listdir(ModulesDirectory)
     modules = sorted(modules, key=lambda s: s.lower())
     print("")
     print("[+] Available modules:")

@@ -5,7 +5,7 @@ from poshc2.Utils import validate_sleep_time
 from poshc2.server.DB import new_task, update_sleep, unhide_implant, kill_implant, get_implantdetails, get_sharpurls, select_item, new_c2_message, update_label, hide_implant
 from poshc2.server.AutoLoads import check_module_loaded, run_autoloads_sharp
 from poshc2.client.Help import sharp_help1
-from poshc2.server.Config import PoshInstallDirectory, PoshProjectDirectory, SocksHost, PayloadsDirectory
+from poshc2.server.Config import PoshInstallDirectory, PoshProjectDirectory, SocksHost, PayloadsDirectory, ModulesDirectory
 from poshc2.Utils import argp, load_file, gen_key
 from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
@@ -19,7 +19,7 @@ def handle_sharp_command(command, user, randomuri, implant_id):
     try:
         check_module_loaded("Stage2-Core.exe", randomuri, user)
     except Exception as e:
-        print("Error loading Stage2-Core.exe: %s" % e)
+        print(Colours.RED, "Error loading Stage2-Core.exe: %s" % e, Colours.GREEN)
 
     # alias mapping
     for alias in cs_alias:
@@ -192,6 +192,7 @@ def do_searchhelp(user, command, randomuri):
 
 
 def do_quit(user, command, randomuri):
+    # TODO should be common command before passing to specific handlers
     ri = input("Are you sure you want to quit? (Y/n) ")
     if ri.lower() == "n":
         return
@@ -201,6 +202,7 @@ def do_quit(user, command, randomuri):
 
 
 def do_upload_file(user, command, randomuri):
+    # TODO lots of common code
     source = ""
     destination = ""
     s = ""
@@ -241,10 +243,12 @@ def do_upload_file(user, command, randomuri):
 
 
 def do_unhide_implant(user, command, randomuri):
+    # TODO should be common command before passing to specific handlers
     unhide_implant(randomuri)
 
 
 def do_hide_implant(user, command, randomuri):
+    # TODO should be common command before passing to specific handlers
     hide_implant(randomuri)
 
 
@@ -309,7 +313,7 @@ def do_kill_implant(user, command, randomuri):
 
 
 def do_exit(user, command, randomuri):
-    return do_kill_implant(user, command, randomuri)\
+    return do_kill_implant(user, command, randomuri)
 
 
 def do_sharpsocks(user, command, randomuri):
@@ -469,7 +473,7 @@ def do_loadmodule(user, command, randomuri):
 
 
 def do_listmodules(user, command, randomuri):
-    modules = os.listdir("%s/Modules/" % PoshInstallDirectory)
+    modules = os.listdir(ModulesDirectory)
     modules = sorted(modules, key=lambda s: s.lower())
     print("")
     print("[+] Available modules:")
@@ -490,6 +494,7 @@ def do_help(user, command, randomuri):
 
 
 def do_back(user, command, randomuri):
+    # TODO should be common command before passing to specific handlers
     pass
 
 
@@ -498,6 +503,7 @@ def do_clear(user, command, randomuri):
 
 
 def do_beacon(user, command, randomuri):
+    # TODO should be common command before passing to specific handlers
     new_sleep = command.replace('set-beacon ', '')
     new_sleep = new_sleep.replace('setbeacon ', '')
     new_sleep = new_sleep.replace('beacon ', '').strip()

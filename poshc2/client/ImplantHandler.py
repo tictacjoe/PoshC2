@@ -7,7 +7,7 @@ from poshc2.server.DB import get_newimplanturl, get_implantbyid, get_implants, n
 from poshc2.server.DB import get_c2urls, del_autorun, del_autoruns, add_autorun, get_autorun, get_newtasks_all
 from poshc2.server.DB import drop_newtasks, get_implanttype, get_history, get_randomuri, get_hostdetails, get_creds, get_creds_for_user, insert_cred
 from poshc2.Colours import Colours
-from poshc2.server.Config import PayloadsDirectory, PoshInstallDirectory, PoshProjectDirectory
+from poshc2.server.Config import PayloadsDirectory, PoshInstallDirectory, PoshProjectDirectory, ModulesDirectory
 from poshc2.server.Core import get_creds_from_params
 from poshc2.client.reporting.HTML import generate_table, graphviz
 from poshc2.server.Payloads import Payloads
@@ -336,6 +336,7 @@ def commandloop(implant_id, user):
 
 
 def do_back(user, command):
+    # TODO recursive
     startup(user)
 
 
@@ -344,6 +345,7 @@ def do_clear(user, command):
 
 
 def do_output_to_html(user, command):
+    # TODO recursive
     startup(user, "This command has been retired, please use generate-reports")
 
 
@@ -354,12 +356,14 @@ def do_generate_reports(user, command):
     generate_table("Implants")
     graphviz()
     time.sleep(1)
+    # TODO recursive
     startup(user)
 
 
 def do_message(user, command):
     message = command[len("message "):]
     new_c2_message("Message from %s - %s" % (user, message))
+    # TODO recursive
     startup(user)
 
 
@@ -368,6 +372,7 @@ def do_show_urls(user, command):
     urlformatted = "RandomID  URL  HostHeader  ProxyURL  ProxyUsername  ProxyPassword  CredentialExpiry\n"
     for i in urls:
         urlformatted += "%s  %s  %s  %s  %s  %s  %s  %s \n" % (i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7])
+    # TODO recursive
     startup(user, urlformatted)
 
 
@@ -377,26 +382,31 @@ def do_add_autorun(user, command):
     autorun = command.replace("add-autorun ", "")
     autorun = autorun.replace("add-autorun", "")
     add_autorun(autorun)
+    # TODO recursive
     startup(user, "add-autorun: %s\r\n" % autorun)
 
 
 def do_list_autoruns(user, command):
     autoruns = get_autorun()
+    # TODO recursive
     startup(user, autoruns)
 
 
 def do_del_autorun(user, command):
     autorun = command.replace("del-autorun ", "")
     del_autorun(autorun)
+    # TODO recursive
     startup(user, "deleted autorun\r\n")
 
 
 def do_nuke_autoruns(user, command):
     del_autoruns()
+    # TODO recursive
     startup(user, "nuked autoruns\r\n")
 
 
 def do_automigrate_frompowershell(user, command):
+    # TODO recursive
     startup(user, "automigrate not currently implemented for the Python version of PoshC2\r\n")
 
 
@@ -407,16 +417,19 @@ def do_am(user, command):
 def do_show_serverinfo(user, command):
     i = get_c2server_all()
     detailsformatted = "\nHostnameIP: %s\nEncKey: %s\nDomainFrontHeader: %s\nDefaultSleep: %s\nKillDate: %s\nHTTPResponse: %s\nFolderPath: %s\nServerPort: %s\nQuickCommand: %s\nDownloadURI: %s\nDefaultProxyURL: %s\nDefaultProxyUser: %s\nDefaultProxyPass: %s\nEnableSounds: %s\nAPIKEY: %s\nMobileNumber: %s\nURLS: %s\nSocksURLS: %s\nInsecure: %s\nUserAgent: %s\nReferer: %s\nAPIToken: %s\nAPIUser: %s\nEnableNotifications: %s\n" % (i[1], i[2], i[3], i[4], i[5], i[6], i[7], i[8], i[9], i[10], i[11], i[12], i[13], i[14], i[15], i[16], i[17], i[18], i[19], i[20], i[21], i[22], i[23], i[24])
+    # TODO recursive
     startup(user, detailsformatted)
 
 
 def do_turnoff_notifications(user, command):
     update_item("EnableNotifications", "C2Server", "No")
+    # TODO recursive
     startup(user, "Turned off notifications on new implant")
 
 
 def do_turnon_notifications(user, command):
     update_item("EnableNotifications", "C2Server", "Yes")
+    # TODO recursive
     startup(user, "Turned on notifications on new implant")
 
 
@@ -424,6 +437,7 @@ def do_set_clockworksmsapikey(user, command):
     cmd = command.replace("set-clockworksmsapikey ", "")
     cmd = cmd.replace("set-clockworksmsapikey", "")
     update_item("ClockworkSMS_MobileNumbers", "C2Server", cmd)
+    # TODO recursive
     startup(user, "Updated set-clockworksmsapikey: %s\r\n" % cmd)
 
 
@@ -431,6 +445,7 @@ def do_set_clockworksmsnumber(user, command):
     cmd = command.replace("set-clockworksmsnumber ", "")
     cmd = cmd.replace("set-clockworksmsnumber", "")
     update_item("ClockworkSMS_APIKEY", "C2Server", cmd)
+    # TODO recursive
     startup(user, "Updated set-clockworksmsnumber (Restart C2 Server): %s\r\n" % cmd)
 
 
@@ -438,6 +453,7 @@ def do_set_killdate(user, command):
     cmd = command.replace("set-killdate ", "")
     cmd = cmd.replace("set-killdate", "")
     update_item("KillDate", "C2Server", cmd)
+    # TODO recursive
     startup(user, "Updated KillDate (Remember to generate new payloads and get new implants): %s\r\n" % cmd)
 
 
@@ -451,6 +467,7 @@ def do_set_defaultbeacon(user, command):
         startup(user)
     else:
         update_item("DefaultSleep", "C2Server", new_sleep)
+        # TODO recursive
         startup(user, "Updated set-defaultbeacon (Restart C2 Server): %s\r\n" % new_sleep)
 
 
@@ -493,13 +510,15 @@ def do_opsec(user, command):
             implant_details = get_implantdetails(t[2])
             uploads += "%s %s\n" % (implant_details[3], output[output.indexof(':'):])
         creds, hashes = parse_creds(get_creds())
+    # TODO recursive
     startup(user, "\nUsers Compromised: \n%s\nHosts Compromised: \n%s\nURLs: \n%s\nFiles Uploaded: \n%s\nCredentials Compromised: \n%s\nHashes Compromised: \n%s" % (users, hosts, urls, uploads, creds, hashes))
 
 
 def do_listmodules(user, command):
     mods = ""
-    for modname in os.listdir("%s/Modules/" % PoshInstallDirectory):
+    for modname in os.listdir(ModulesDirectory):
         mods += "%s\r\n" % modname
+    # TODO recursive
     startup(user, mods)
 
 
