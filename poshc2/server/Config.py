@@ -60,11 +60,11 @@ HTTPResponses = [
 ]
 ServerHeader = config["ServerHeader"]
 Insecure = "[System.Net.ServicePointManager]::ServerCertificateValidationCallback: {$true}"
-
+UseHttp = config['UseHttp']
 if config["UrlConfig"] == "urls":
-    urlConfig = UrlConfig("%surls.txt" % ResourcesDirectory)  
+    urlConfig = UrlConfig("%surls.txt" % ResourcesDirectory, use_http=(UseHttp.lower() == 'true'))  
 elif config["UrlConfig"] == "wordlist":
-    urlConfig = UrlConfig(wordList="%swordlist.txt" % ResourcesDirectory)
+    urlConfig = UrlConfig(wordList="%swordlist.txt" % ResourcesDirectory, use_http=(UseHttp.lower() == 'true'))
 else:
     raise Exception(f"Invalid configuration: urlConfig must be urls/wordlist but was: {config['urlConfig']}")
 

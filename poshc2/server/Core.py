@@ -4,6 +4,7 @@ from poshc2.Utils import randomuri
 from poshc2.client.cli.TabComplete import tabCompleter
 from poshc2.client.Help import COMMANDS
 from poshc2.server.DB import get_cred_by_id
+from poshc2.Colours import Colours
 
 
 def number_of_days(date1, date2): 
@@ -127,7 +128,7 @@ def readfile_with_completion(message):
     return path
 
 
-def get_creds_from_params(params, startup, user):
+def get_creds_from_params(params, user):
     if "-credid" in params:
         p = re.compile(r"-credid (\w*)")
         credId = re.search(p, params)
@@ -135,10 +136,10 @@ def get_creds_from_params(params, startup, user):
         if credId:
             credId = credId.group(1)
         else:
-            startup(user, "Please specify a credid")
+            print(Colours.RED, "Please specify a credid", Colours.GREEN)
         creds = get_cred_by_id(credId)
         if creds is None:
-            startup(user, "Unrecognised CredID: %s" % credId)
+            print(Colours.RED, "Unrecognised CredID: %s" % credId, Colours.GREEN)
         return (creds, params)
     else:
-        startup(user, "Command does not contain -credid")
+        print(Colours.RED, "Command does not contain -credid", Colours.GREEN)

@@ -338,6 +338,13 @@ def unhide_implant(randomuri):
     conn.commit()
 
 
+def hide_implant(randomuri):
+    conn = sqlite3.connect(Database)
+    c = conn.cursor()
+    c.execute("UPDATE Implants SET Alive='No' WHERE RandomURI=?", (randomuri,))
+    conn.commit()
+
+
 def select_mods(randomuri):
     conn = sqlite3.connect(Database)
     conn.row_factory = sqlite3.Row

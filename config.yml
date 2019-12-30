@@ -19,6 +19,7 @@ DefaultSleep: "5s"
 Jitter: 0.20
 KillDate: "01/03/2020"  # dd/MM/yyyy
 UrlConfig: urls # Beacon URLs will be taken from resources/urls.txt if value is 'urls'. If value is 'wordlists' beacon URLs will be randomly generated on server creation from resources/wordlist.txt
+UseHttp: false # Use http instead of https
 
 # Payload Options
 DefaultMigrationProcess: "C:\\Windows\\system32\\netsh.exe"  # Used in the PoshXX_migrate.exe payloads
