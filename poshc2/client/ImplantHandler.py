@@ -46,15 +46,6 @@ def get_implant_type_prompt_prefix(implant_id):
     return pivot
 
 
-def complete(text, state):
-    for cmd in COMMANDS:
-        if cmd.startswith(text):
-            if not state:
-                return cmd
-            else:
-                state -= 1
-
-
 def startup(user, printhelp=""):
     session = PromptSession(history=FileHistory('%s/.top-history' % PoshProjectDirectory), auto_suggest=AutoSuggestFromHistory())
     try:

@@ -2,6 +2,8 @@
 
 import sys
 
+VERSION = "v5.1"
+
 def run():
     if sys.argv[1] == '--client':
         import poshc2.client as client

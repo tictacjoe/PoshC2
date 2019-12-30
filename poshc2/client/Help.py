@@ -1,3 +1,5 @@
+
+from poshc2 import VERSION
 from poshc2.Colours import Colours
 import subprocess
 
@@ -10,9 +12,9 @@ try:
     |    |  (  <_> )___ \|   Y  \ \     \____/       \\
     |____|   \____/____  >___|  /  \______  /\_______ \\
                         \/     \/          \/         \/
-    =============== v5.1 www.PoshC2.co.uk =============
+    =============== %s www.PoshC2.co.uk =============
     =========== %s ===========
-    """ % commit
+    """ % (VERSION, commit)
 except Exception:
     logopic = Colours.GREEN + r"""
     __________            .__.     _________  ________
@@ -21,8 +23,8 @@ except Exception:
     |    |  (  <_> )___ \|   Y  \ \     \____/       \\
     |____|   \____/____  >___|  /  \______  /\_______ \\
                         \/     \/          \/         \/
-    =============== v5.1 www.PoshC2.co.uk =============
-    """
+    =============== %s www.PoshC2.co.uk =============
+    """ % VERSION
 
 py_help1 = Colours.GREEN + """
 Implant Features:
