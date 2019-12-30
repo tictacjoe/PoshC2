@@ -4,10 +4,10 @@
 echo ""
 echo """ 
    __________            .__.     _________  ________
-   \_______  \____  _____|  |__   \_   ___ \ \_____  \\
+   \_______  \____  _____|  |__   \_   ___ \ \_____  \\\\
     |     ___/  _ \/  ___/  |  \  /    \  \/  /  ____/
-    |    |   ( <_>)___  \|   Y  \ \     \____/       \\
-    |____|   \____/____  >___|  /  \______  /\_______ \\
+    |    |   ( <_>)___  \|   Y  \ \     \____/       \\\\
+    |____|   \____/____  >___|  /  \______  /\_______ \\\\
                        \/     \/          \/         \/
     ================= www.PoshC2.co.uk ================"""
 echo ""
@@ -17,8 +17,8 @@ echo ""
 
 if [[ ! -z "$1" ]]; then
     POSH_DIR="$1"
-    echo "\033[93mPoshC2 is not being installed to /opt/PoshC2."
-    echo "Don't forget to set the POSHC2_DIR environment variable so that the commands use the correct directory.\033[0m"
+    echo "PoshC2 is not being installed to /opt/PoshC2."
+    echo "Don't forget to set the POSHC2_DIR environment variable so that the commands use the correct directory."
 elif [[ ! -z "${POSHC2_DIR}" ]]; then
      POSH_DIR="${POSHC2_DIR}"
 else
@@ -67,14 +67,15 @@ echo ""
 echo "[+] Setup complete"
 echo """
    __________            .__.     _________  ________
-   \_______  \____  _____|  |__   \_   ___ \ \_____  \\
+   \_______  \____  _____|  |__   \_   ___ \ \_____  \\\\
     |     ___/  _ \/  ___/  |  \  /    \  \/  /  ____/
-    |    |   ( <_>)___  \|   Y  \ \     \____/       \\
-    |____|   \____/____  >___|  /  \______  /\_______ \\
+    |    |   ( <_>)___  \|   Y  \ \     \____/       \\\\
+    |____|   \____/____  >___|  /  \______  /\_______ \\\\
                        \/     \/          \/         \/
     ================= www.PoshC2.co.uk ================"""
 echo ""
-echo "EDIT the config file - run: posh-config"
+echo "Edit the config file - run: "
+echo "# posh-config"
 echo ""
 echo "Then build the Docker image:"
 echo "# posh-docker-build"
