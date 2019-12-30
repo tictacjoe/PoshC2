@@ -46,24 +46,26 @@ fi
 
 echo ""
 echo "[+] Copying useful scripts to /usr/bin"
-cp "$POSH_DIR/Files/fpc" /usr/bin
-cp "$POSH_DIR/Files/posh-config" /usr/bin
-cp "$POSH_DIR/Files/posh-docker" /usr/bin
-cp "$POSH_DIR/Files/posh-docker-server" /usr/bin
-cp "$POSH_DIR/Files/posh-docker-build" /usr/bin
-cp "$POSH_DIR/Files/posh-docker-clean" /usr/bin
-cp "$POSH_DIR/Files/posh-docker-service" /usr/bin
+cp "$POSH_DIR/resources/scripts/fpc" /usr/bin
+cp "$POSH_DIR/resources/scripts/posh-config" /usr/bin
+cp "$POSH_DIR/resources/scripts/posh-docker" /usr/bin/posh
+cp "$POSH_DIR/resources/scripts/posh-docker-server" /usr/bin/posh-server
+cp "$POSH_DIR/resources/scripts/posh-docker-build" /usr/bin
+cp "$POSH_DIR/resources/scripts/posh-docker-clean" /usr/bin
+cp "$POSH_DIR/resources/scripts/posh-docker-service" /usr/bin/posh-service
+cp "$POSH_DIR/resources/scripts/posh-log" /usr/bin
 chmod +x /usr/bin/fpc
 chmod +x /usr/bin/posh-config
-chmod +x /usr/bin/posh-docker
-chmod +x /usr/bin/posh-docker-server
+chmod +x /usr/bin/posh
+chmod +x /usr/bin/posh-server
 chmod +x /usr/bin/posh-docker-build
 chmod +x /usr/bin/posh-docker-clean
-chmod +x /usr/bin/posh-docker-service
+chmod +x /usr/bin/posh-service
+chmod +x /usr/bin/posh-log
 
 echo ""
 echo "[+] Setup complete"
-echo """\033[92m
+echo """
    __________            .__.     _________  ________
    \_______  \____  _____|  |__   \_   ___ \ \_____  \\
     |     ___/  _ \/  ___/  |  \  /    \  \/  /  ____/
@@ -78,8 +80,9 @@ echo "Then build the Docker image:"
 echo "# posh-docker-build"
 echo ""
 echo "Then run:"
-echo "# posh-docker-server"
-echo "# posh-docker"
+echo "# posh-server <-- This will run the C2 server, which communicates with Implants and receives task output"
+echo "# posh <-- This will run the ImplantHandler, used to issue commands to the server and implants"
 echo ""
-echo "To run as a service use posh-docker-service instead of posh-docker-server"
-echo "\033[0m"
+echo "Other options:"
+echo "posh-service <-- This will run the C2 server as a service instead of in the foreground"
+echo "posh-log <-- This will view the C2 log if the server is already running"
